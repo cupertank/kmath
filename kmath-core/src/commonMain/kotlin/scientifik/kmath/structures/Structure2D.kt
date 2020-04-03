@@ -4,8 +4,8 @@ package scientifik.kmath.structures
  * A structure that is guaranteed to be two-dimensional
  */
 interface Structure2D<T> : NDStructure<T> {
-    val rowNum: Int get() = shape[0]
-    val colNum: Int get() = shape[1]
+    val rowNum: Int get() = shape[1]
+    val colNum: Int get() = shape[0]
 
     operator fun get(i: Int, j: Int): T
 
@@ -17,18 +17,18 @@ interface Structure2D<T> : NDStructure<T> {
 
     val rows: Buffer<Buffer<T>>
         get() = VirtualBuffer(rowNum) { i ->
-            VirtualBuffer(colNum) { j -> get(i, j) }
+            VirtualBuffer(colNum) { j -> get(j, i) }
         }
 
     val columns: Buffer<Buffer<T>>
         get() = VirtualBuffer(colNum) { j ->
-            VirtualBuffer(rowNum) { i -> get(i, j) }
+            VirtualBuffer(rowNum) { i -> get(j, i) }
         }
 
     override fun elements(): Sequence<Pair<IntArray, T>> = sequence {
         for (i in (0 until rowNum)) {
             for (j in (0 until colNum)) {
-                yield(intArrayOf(i, j) to get(i, j))
+                yield(intArrayOf(j, i) to get(j, i))
             }
         }
     }

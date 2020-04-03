@@ -1,6 +1,6 @@
 package scientifik.kmath.linear
 
-import scientifik.kmath.structures.Matrix
+import scientifik.kmath.structures.*
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
@@ -26,6 +26,15 @@ class MatrixTest {
         val matrix = MatrixContext.real.one(3, 3)
         val transposed = matrix.transpose()
         assertEquals(matrix, transposed)
+    }
+
+    @Test
+    fun testDotNew(){
+        val firstMatrix = BufferNDStructure(DefaultStrides(intArrayOf(3, 2)), ListBuffer(6) { 1.0 })
+        val secondMatrix = BufferNDStructure(DefaultStrides(intArrayOf(5, 3)), ListBuffer(15) { 1.0 })
+
+        val product = MatrixContext.real.run { firstMatrix.as2D() dot secondMatrix.as2D() }
+        return
     }
 
 
